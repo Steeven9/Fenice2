@@ -3,10 +3,10 @@
 import { deleteCharacter } from "@/actions/characters";
 
 import { deleteNpc } from "@/actions/npcs";
+import { showAlert } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Edit, Trash2 } from "react-feather";
-import Swal from "sweetalert2";
 import Button from "./button";
 
 interface Props {
@@ -23,12 +23,10 @@ export default function CharacterButtons({
   const router = useRouter();
 
   async function handleDelete() {
-    Swal.fire({
+    showAlert({
       title: `Delete ${isNpc ? "NPC" : "character"}?`,
       text: `Do you really want to delete ${name}? This operation is irreversible!`,
       icon: "warning",
-      reverseButtons: true,
-      showCancelButton: true,
       confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {

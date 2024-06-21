@@ -12,6 +12,10 @@ export default async function CampaignsPage() {
   result = await getNpcs();
   const npcs = (result.data as NPC[]) ?? [];
 
+  if (campaigns.length == 0) {
+    return "No campaigns found";
+  }
+
   return campaigns.map((campaign) => {
     const currentCharacters = characters.filter((char) =>
       char.campaignId.equals(campaign._id)

@@ -12,6 +12,7 @@ import {
   healthColors,
   parseBlock,
 } from "@/lib/initiative";
+import { showAlert } from "@/lib/utils";
 import { Character, GameData } from "@/types/Initiative";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -30,7 +31,6 @@ import {
   Upload,
 } from "react-feather";
 import io from "socket.io-client";
-import Swal from "sweetalert2";
 
 let socket: any;
 
@@ -84,7 +84,7 @@ export default function InitiativePage() {
 
     const oldValue = order.find((character) => character.name === name.value);
     if (!isEditing && oldValue) {
-      Swal.fire({
+      showAlert({
         title: "Invalid input",
         text: `Character ${name.value} already exists`,
         icon: "error",
@@ -94,7 +94,7 @@ export default function InitiativePage() {
     }
 
     if (!name.value || !score.value) {
-      Swal.fire({
+      showAlert({
         title: "Invalid input",
         text: "Name or initiative value are missing or wrong",
         icon: "error",
@@ -185,12 +185,10 @@ export default function InitiativePage() {
   };
 
   const removeCharacter = (name: string) => {
-    Swal.fire({
+    showAlert({
       title: "Remove character?",
       text: `Do you want to remove ${name} from the initiative?`,
       icon: "warning",
-      reverseButtons: true,
-      showCancelButton: true,
       confirmButtonText: "Remove",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -241,15 +239,13 @@ export default function InitiativePage() {
   };
 
   const damageCharacter = async (currentCharacter: string) => {
-    const { value: damage } = await Swal.fire({
+    const { value: damage } = await showAlert({
       title: "Enter damage",
       inputLabel: "How much damage? Tip: enter a negative value for healing",
       input: "text",
-      reverseButtons: true,
-      showCancelButton: true,
       inputValidator: (value) => {
         if (!value) {
-          return "You need to write something!";
+          return "Please provide a healing value";
         }
       },
     });
@@ -273,12 +269,10 @@ export default function InitiativePage() {
   };
 
   const clear = () => {
-    Swal.fire({
+    showAlert({
       title: "Clear initiative?",
       text: `Do you want to clear the entire initiative? This will remove every character from the party!`,
       icon: "warning",
-      reverseButtons: true,
-      showCancelButton: true,
       confirmButtonText: "Clear",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -288,12 +282,10 @@ export default function InitiativePage() {
   };
 
   const restart = () => {
-    Swal.fire({
+    showAlert({
       title: "Restart combat?",
       text: `Do you want to restart the combat? This will bring you back to the preparation phase.`,
       icon: "warning",
-      reverseButtons: true,
-      showCancelButton: true,
       confirmButtonText: "Restart",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -363,12 +355,10 @@ export default function InitiativePage() {
   };
 
   const loadOrder = async () => {
-    Swal.fire({
+    showAlert({
       title: "Load default?",
       text: `Do you want to load the default party? This will overwrite the current order!`,
       icon: "warning",
-      reverseButtons: true,
-      showCancelButton: true,
       confirmButtonText: "Load",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -377,7 +367,7 @@ export default function InitiativePage() {
           save({ order: newOrder.data[0].order, turn: 1 });
         } else {
           console.error(newOrder.message);
-          Swal.fire({
+          showAlert({
             title: "Error",
             text: "Couldn't load default party",
             icon: "error",
@@ -388,12 +378,10 @@ export default function InitiativePage() {
   };
 
   const saveOrder = async () => {
-    Swal.fire({
+    showAlert({
       title: "Save default?",
       text: "Do you want save this party as default?",
       icon: "warning",
-      reverseButtons: true,
-      showCancelButton: true,
       confirmButtonText: "Save",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -518,13 +506,11 @@ export default function InitiativePage() {
   };
 
   const bulkAdd = async () => {
-    const { value: text } = await Swal.fire({
+    const { value: text } = await showAlert({
       input: "textarea",
       inputLabel:
         "Bulk add characters\nFormat: name, initiative, current hp, total hp[, enemy]\nNames MUST be unique!",
       inputPlaceholder: "Zombie,20,190,210,true\nLaura,25,150,150",
-      showCancelButton: true,
-      reverseButtons: true,
     });
     if (!text) {
       return;
@@ -535,7 +521,7 @@ export default function InitiativePage() {
     // validate that there are no duplicate names
     for (let character of parsedText) {
       if (order.find((char) => char.name === character.name)) {
-        Swal.fire({
+        showAlert({
           title: "Duplicated entry",
           text: `Character ${character.name} already exists`,
           icon: "error",

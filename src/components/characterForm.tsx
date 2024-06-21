@@ -7,12 +7,12 @@ import {
 } from "@/actions/characters";
 import { insertNpc, updateNpc } from "@/actions/npcs";
 import { alignments, getActualAlignment } from "@/lib/alignment";
+import { showAlert } from "@/lib/utils";
 import { Campaign, Character, NPC } from "@/types/API";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { Info } from "react-feather";
-import Swal from "sweetalert2";
 import Select from "./select";
 import Textfield from "./textfield";
 
@@ -147,12 +147,11 @@ export default function CharacterForm({
             size={18}
             className="inline-block ml-1"
             onClick={() => {
-              Swal.fire(
-                undefined,
-                `You can add multiple images.<br> If you're editing a character,
+              showAlert({
+                html: `You can add multiple images.<br> If you're editing a character,
                   any image you upload here will be added to the already existing ones.<br>
-                  Contact Steeven if you need to remove an image.`
-              );
+                  Contact Steeven if you need to remove an image.`,
+              });
             }}
           />
           <br />

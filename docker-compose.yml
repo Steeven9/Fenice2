@@ -1,10 +1,12 @@
-version: "3.9"
 services:
   fenice2:
     container_name: fenice2
     restart: always
     build: . # change to image for prod
+    # image: steeven9/fenice2
+    platform: linux/amd64
     environment:
+      # adjust if needed
       - MONGODB_URI=mongodb://user:password@mongodb:27017
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=supersecret
@@ -15,8 +17,10 @@ services:
       - "3000:3000"
 
   mongodb:
-    image: bitnami/mongodb
     container_name: mongodb
+    restart: always
+    image: bitnami/mongodb
+    platform: linux/amd64
     environment:
       - MONGODB_USERNAME=user
       - MONGODB_PASSWORD=password

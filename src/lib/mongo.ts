@@ -166,8 +166,11 @@ export async function parseImageFiles(dataArray: File[]) {
 
 export async function getDefaultCampaign() {
   const result = await getCampaigns();
-  const campaign = result?.data.reverse()[0] as Campaign;
-  return campaign?._id;
+  if (!result || result.data.length == 0) {
+    throw new Error("Cannot find any campaign");
+  }
+  const campaign = result.data.reverse()[0] as Campaign;
+  return campaign._id;
 }
 
 // just to avoid having clear emails in links
