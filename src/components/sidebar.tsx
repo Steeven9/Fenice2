@@ -7,11 +7,11 @@ import {
   Archive,
   Calendar,
   File,
+  Globe,
   Home,
   List,
   Map,
   Octagon,
-  SkipBack,
   Users,
   Zap,
 } from "react-feather";
@@ -25,10 +25,13 @@ export default function Sidebar() {
     >
       <div>
         <SidebarLink name="Home" path="/" icon={<Home />} />
-        <SidebarLink name="Alignment" path="/alignment" icon={<Octagon />} />
-        <SidebarLink name="Calendar" path="/calendar" icon={<Calendar />} />
+        <hr />
         <SidebarLink name="Campaigns" path="/campaigns" icon={<Archive />} />
         <SidebarLink name="Characters" path="/characters" icon={<Users />} />
+        <SidebarLink name="NPCs" path="/npcs" icon={<Users />} />
+        <hr />
+        <SidebarLink name="Alignment" path="/alignment" icon={<Octagon />} />
+        <SidebarLink name="Calendar" path="/calendar" icon={<Calendar />} />
         <SidebarLink
           name="Documents"
           path={`/documents/${defaultEdition}`}
@@ -36,17 +39,17 @@ export default function Sidebar() {
         />
         <SidebarLink name="Initiative" path="/initiative" icon={<List />} />
         <SidebarLink name="Map" path="/map" icon={<Map />} />
-        <SidebarLink name="NPCs" path="/npcs" icon={<Users />} />
         <SidebarLink
           name="Skills"
           path={`/skills/${defaultEdition}`}
           icon={<Zap />}
         />
         {/* <SidebarLink name="Table" path="/table" icon={<Grid />} /> */}
+        <hr />
         <SidebarLink
           name="Old site &#x2197;"
           path="https://lafenice.soulsbros.ch"
-          icon={<SkipBack />}
+          icon={<Globe />}
           newTab
         />
         <SidebarLink
