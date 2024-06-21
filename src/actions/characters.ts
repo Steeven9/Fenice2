@@ -9,6 +9,7 @@ import {
   parseImageFiles,
   updateDoc,
 } from "@/lib/mongo";
+import { parseFormData } from "@/lib/utils";
 import { Action, Character } from "@/types/API";
 import { Document, Filter, ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
@@ -44,29 +45,29 @@ export async function insertCharacter(prevState: any, formData: FormData) {
     return { message: "Error: missing required data" };
   }
 
-  const alignment = formData.get("alignment")?.toString() ?? "";
+  const alignment = parseFormData(formData, "alignment");
   const formImages = formData.getAll("images") as File[];
   let images = await parseImageFiles(formImages);
 
   const char: Character = {
-    campaignId: new ObjectId(formData.get("campaignId")?.toString() ?? ""),
+    campaignId: new ObjectId(parseFormData(formData, "campaignId")),
     player:
       userData?.user.nickname != null
         ? userData?.user.nickname
         : userData?.user.firstName,
     playerEmail: userData?.user.email ?? "",
-    name: formData.get("name")?.toString().trim() ?? "",
-    race: formData.get("race")?.toString().trim() ?? "",
-    gender: formData.get("gender")?.toString().trim() ?? "",
-    pronouns: formData.get("pronouns")?.toString().trim() ?? "",
-    orientation: formData.get("orientation")?.toString().trim() ?? "",
-    class: formData.get("class")?.toString().trim() ?? "",
+    name: parseFormData(formData, "name"),
+    race: parseFormData(formData, "race", true),
+    gender: parseFormData(formData, "gender", true),
+    pronouns: parseFormData(formData, "pronouns", true),
+    orientation: parseFormData(formData, "orientation", true),
+    class: parseFormData(formData, "class", true),
     startAlignment: alignment,
     actionsHistory: [],
     lawfulChaoticValue: getValueFromAlignment(alignment, "LC"),
     goodEvilValue: getValueFromAlignment(alignment, "GE"),
-    backstory: formData.get("backstory")?.toString().trim() ?? "",
-    personality: formData.get("personality")?.toString().trim() ?? "",
+    backstory: parseFormData(formData, "backstory"),
+    personality: parseFormData(formData, "personality"),
     images: images,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -83,7 +84,7 @@ export async function insertCharacter(prevState: any, formData: FormData) {
 
 export async function updateCharacter(prevState: any, formData: FormData) {
   const userData = await getServerSession(authOptions);
-  const id = new ObjectId(formData.get("_id")?.toString() ?? "");
+  const id = new ObjectId(parseFormData(formData, "_id"));
   const oldData = await getCharacters(undefined, {
     _id: id,
   });
@@ -107,24 +108,22 @@ export async function updateCharacter(prevState: any, formData: FormData) {
     return { message: "Error: missing one or more required fields" };
   }
 
-  const alignment = formData.get("alignment")?.toString() ?? "";
+  const alignment = parseFormData(formData, "alignment");
   const formImages = formData.getAll("images") as File[];
   let images = [...char.images, ...(await parseImageFiles(formImages))];
 
-  char.name = formData.get("name")?.toString().trim() ?? char.name;
-  char.pronouns = formData.get("pronouns")?.toString().trim() ?? char.pronouns;
+  char.name = parseFormData(formData, "name") ?? char.name;
+  char.pronouns = parseFormData(formData, "pronouns", true) ?? char.pronouns;
   char.orientation =
-    formData.get("orientation")?.toString().trim() ?? char.orientation;
-  char.gender = formData.get("gender")?.toString().trim() ?? char.gender;
-  char.race = formData.get("race")?.toString().trim() ?? char.race;
-  char.class = formData.get("class")?.toString().trim() ?? char.class;
+    parseFormData(formData, "orientation", true) ?? char.orientation;
+  char.gender = parseFormData(formData, "gender", true) ?? char.gender;
+  char.race = parseFormData(formData, "race", true) ?? char.race;
+  char.class = parseFormData(formData, "class", true) ?? char.class;
   char.lawfulChaoticValue = getValueFromAlignment(alignment, "LC");
   char.goodEvilValue = getValueFromAlignment(alignment, "GE");
-  char.backstory =
-    formData.get("backstory")?.toString().trim() ?? char.backstory;
-  char.personality =
-    formData.get("personality")?.toString().trim() ?? char.personality;
-  char.campaignId = new ObjectId(formData.get("campaignId")?.toString().trim());
+  char.backstory = parseFormData(formData, "backstory") ?? char.backstory;
+  char.personality = parseFormData(formData, "personality") ?? char.personality;
+  char.campaignId = new ObjectId(parseFormData(formData, "campaignId"));
   char.player =
     userData?.user.nickname != null
       ? userData?.user.nickname

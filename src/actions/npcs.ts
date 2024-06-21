@@ -8,6 +8,7 @@ import {
   parseImageFiles,
   updateDoc,
 } from "@/lib/mongo";
+import { parseFormData } from "@/lib/utils";
 import { NPC } from "@/types/API";
 import { Document, Filter, ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
@@ -39,16 +40,16 @@ export async function insertNpc(prevState: any, formData: FormData) {
   let images = await parseImageFiles(formImages);
 
   const npc: NPC = {
-    campaignId: new ObjectId(formData.get("campaignId")?.toString() ?? ""),
-    name: formData.get("name")?.toString().trim() ?? "",
-    race: formData.get("race")?.toString().trim() ?? "",
-    gender: formData.get("gender")?.toString().trim() ?? "",
-    pronouns: formData.get("pronouns")?.toString().trim() ?? "",
-    orientation: formData.get("orientation")?.toString().trim() ?? "",
-    class: formData.get("class")?.toString().trim() ?? "",
-    status: formData.get("status")?.toString().trim() ?? "",
-    backstory: formData.get("backstory")?.toString().trim() ?? "",
-    personality: formData.get("personality")?.toString().trim() ?? "",
+    campaignId: new ObjectId(parseFormData(formData, "campaignId")),
+    name: parseFormData(formData, "name"),
+    race: parseFormData(formData, "race", true),
+    gender: parseFormData(formData, "gender", true),
+    pronouns: parseFormData(formData, "pronouns", true),
+    orientation: parseFormData(formData, "orientation", true),
+    class: parseFormData(formData, "class", true),
+    status: parseFormData(formData, "status", true),
+    backstory: parseFormData(formData, "backstory"),
+    personality: parseFormData(formData, "personality"),
     images: images,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -66,7 +67,7 @@ export async function insertNpc(prevState: any, formData: FormData) {
 
 export async function updateNpc(prevState: any, formData: FormData) {
   const userData = await getServerSession(authOptions);
-  const id = new ObjectId(formData.get("_id")?.toString() ?? "");
+  const id = new ObjectId(parseFormData(formData, "_id"));
   const oldData = await getNpcs(undefined, {
     _id: id,
   });
@@ -89,18 +90,18 @@ export async function updateNpc(prevState: any, formData: FormData) {
   const formImages = formData.getAll("images") as File[];
   let images = [...npc.images, ...(await parseImageFiles(formImages))];
 
-  npc.name = formData.get("name")?.toString().trim() ?? npc.name;
-  npc.pronouns = formData.get("pronouns")?.toString().trim() ?? npc.pronouns;
+  npc.name = parseFormData(formData, "name") ?? npc.name;
+  npc.pronouns = parseFormData(formData, "pronouns", true) ?? npc.pronouns;
   npc.orientation =
-    formData.get("orientation")?.toString().trim() ?? npc.orientation;
-  npc.gender = formData.get("gender")?.toString().trim() ?? npc.gender;
-  npc.race = formData.get("race")?.toString().trim() ?? npc.race;
-  npc.class = formData.get("class")?.toString().trim() ?? npc.class;
-  npc.status = formData.get("status")?.toString().trim() ?? npc.status;
-  npc.backstory = formData.get("backstory")?.toString().trim() ?? npc.backstory;
+    parseFormData(formData, "orientation", true) ?? npc.orientation;
+  npc.gender = parseFormData(formData, "gender", true) ?? npc.gender;
+  npc.race = parseFormData(formData, "race", true) ?? npc.race;
+  npc.class = parseFormData(formData, "class", true) ?? npc.class;
+  npc.status = parseFormData(formData, "status", true) ?? npc.status;
+  npc.backstory = parseFormData(formData, "backstory") ?? npc.backstory;
   npc.personality =
     formData.get("personality")?.toString().trim() ?? npc.personality;
-  npc.campaignId = new ObjectId(formData.get("campaignId")?.toString());
+  npc.campaignId = new ObjectId(parseFormData(formData, "campaignId"));
   npc.updatedAt = new Date();
   npc.updatedBy = userData?.user.email;
   npc.images = images;

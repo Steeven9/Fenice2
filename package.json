@@ -1,6 +1,6 @@
 {
   "name": "fenice2",
-  "version": "2.1.22",
+  "version": "2.1.23",
   "private": true,
   "description": "The site of La Compagnia della Fenice",
   "author": "soulsbros",
@@ -56,5 +56,6 @@
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "typescript": "5.3.3"
-  }
+  },
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
