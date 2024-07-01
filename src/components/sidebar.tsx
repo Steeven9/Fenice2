@@ -21,7 +21,7 @@ export default function Sidebar() {
   return (
     <div
       id="menuPanel"
-      className="min-w-fit flex-col justify-between hidden sm:flex"
+      className="min-w-fit flex-col justify-between hidden sm:flex mr-5"
     >
       <div>
         <SidebarLink name="Home" path="/" icon={<Home />} />
