@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3d-dice/dice-box@^1.0.10":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@3d-dice/dice-box/-/dice-box-1.0.15.tgz#407825ee3ce5b7fae4e6c3226f921a399b44c076"
-  integrity sha512-NI4BENmRGyf0BfzzogCsPMDWj4rPF4Cn9/RIYN3DmqYDmZ9fiWwloxBXrFMeTtaHd7B/iapgL9vxKuvhvN1wiA==
+"@3d-dice/dice-box@1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@3d-dice/dice-box/-/dice-box-1.0.14.tgz#e9c881fdc8a71193871afa503b89ad186fc4d174"
+  integrity sha512-aCz2W3WpGrgl1vegUY1m5l//+83Whx6dlVBZzMwqV7t2S6c0VzTAshPvKvrbN7W3n8zyMCeOuZ0vp4J00ZH9Ww==
   dependencies:
     "@babylonjs/core" "5.57.1"
     "@babylonjs/loaders" "5.57.1"

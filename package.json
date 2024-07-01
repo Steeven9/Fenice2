@@ -10,13 +10,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "prettier": "prettier --check ./src/**",
+    "prettify": "prettier --write ./src/**",
     "prepare": "husky install"
   },
   "engines": {
     "node": "^20.0.0"
   },
   "dependencies": {
-    "@3d-dice/dice-box": "^1.0.10",
+    "@3d-dice/dice-box": "1.0.14",
     "@3d-dice/dice-parser-interface": "^0.2.1",
     "@3d-dice/dice-ui": "^0.4.3",
     "@fullcalendar/core": "^6.1.10",
