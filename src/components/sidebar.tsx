@@ -14,6 +14,7 @@ import {
   Map,
   Octagon,
   Users,
+  Volume2,
   Zap,
 } from "react-feather";
 import SidebarLink from "./sidebarLink";
@@ -45,7 +46,7 @@ export default function Sidebar() {
           path={`/skills/${defaultEdition}`}
           icon={<Zap />}
         />
-        {/* <SidebarLink name="Table" path="/table" icon={<Grid />} /> */}
+        <SidebarLink name="Soundboard" path="/sounds" icon={<Volume2 />} />
         <hr />
         <SidebarLink
           name="Old website &#x2197;"
