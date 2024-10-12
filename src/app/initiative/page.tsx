@@ -37,20 +37,21 @@ let socket: any;
 
 export default function InitiativePage() {
   const { data: session } = useSession();
+  const isAdmin = session?.user.roles.includes("admin");
+  const isPlayer = session?.user.roles.includes("player");
+  const isDM = session?.user.roles.includes("dm") ?? false;
+
   const [order, setOrder] = useState<Character[]>([]);
   const [turn, setTurn] = useState(1);
 
   const [isEditing, setIsEditing] = useState(false);
   const [shouldScroll, setShouldScroll] = useState(true);
-  const [shouldTTS, setShouldTTS] = useState(true);
-  const [isEnemy, setIsEnemy] = useState(true);
-  const [shouldPersist, setShouldPersist] = useState(true);
+  const [shouldTTS, setShouldTTS] = useState(false);
+  const [isEnemy, setIsEnemy] = useState(isDM);
+  const [shouldPersist, setShouldPersist] = useState(isDM);
 
   const comparator = (characterA: Character, characterB: Character) =>
     characterB.score - characterA.score;
-  const isAdmin = session?.user.roles.includes("admin");
-  const isPlayer = session?.user.roles.includes("player");
-  const isDM = session?.user.roles.includes("dm");
 
   const getFields = () => {
     let name = document.querySelector("#newCharacterName") as HTMLInputElement;
@@ -146,7 +147,7 @@ export default function InitiativePage() {
       active: oldValue?.active ?? false,
       player: oldValue?.player ?? session?.user.email ?? "",
       isPlayer: oldValue?.isPlayer ?? !isDM,
-      isEnemy: oldValue?.isEnemy ?? isEnemy ?? false,
+      isEnemy: isEnemy,
       currentHealth: parseInt(currentHealth.value) || 0,
       totalHealth: parseInt(totalHealth.value) || 0,
       notes: notes.value,
@@ -699,12 +700,13 @@ export default function InitiativePage() {
           <div>
             <span className="inline-block align-top mr-4">
               <p className="subtitle mt-4">HP color scale</p>
-              <p className={healthColors[0]}>&gt;100% - Untouched</p>
-              <p className={healthColors[1]}>&gt;80% - Barely injured</p>
-              <p className={healthColors[2]}>&gt;60% - Lightly injured</p>
-              <p className={healthColors[3]}>&gt;40% - Injured</p>
-              <p className={healthColors[4]}>&gt;20% - Gravely injured</p>
-              <p className={healthColors[5]}>&lt;20% - Near death</p>
+              <p className={healthColors[0]}>100% - Untouched</p>
+              <p className={healthColors[1]}>81-99% - Barely injured</p>
+              <p className={healthColors[2]}>61-80% - Lightly injured</p>
+              <p className={healthColors[3]}>41-60% - Injured</p>
+              <p className={healthColors[4]}>21-40% - Gravely injured</p>
+              <p className={healthColors[5]}>1-20% - Near death</p>
+              <p className={healthColors[5]}>0% - Unconscious</p>
             </span>
             <span className="inline-block align-top">
               <p className="subtitle mt-4">Characters legend</p>

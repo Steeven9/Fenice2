@@ -30,6 +30,6 @@ export async function playTTS(message: string) {
   await fetch(process.env.TTS_URL, {
     method: "POST",
     headers: { "Content-type": "application/json" },
-    body: `{"message": "${message}", "target": "media_player.alexa_kitchen"}`,
+    body: `{"message": "${message}", "target": "media_player.d_d_table"}`,
   });
 }
