@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 
 //TODO move to app directory
 
-let initiativeData: GameData = { order: [], turn: 1, shouldTTS: true };
+let initiativeData: GameData = { order: [], turn: 1, shouldTTS: false };
 
 export default function SocketHandler(req: Request, res: any) {
   if (!res.socket.server.io) {
