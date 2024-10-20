@@ -84,7 +84,7 @@ export default async function CharacterInfo({ character }: Readonly<Props>) {
                 className="block mr-4 mb-4"
                 width="560"
                 height="315"
-                src={link}
+                src={`https://www.youtube-nocookie.com/embed/${link.trim()}`}
                 key={link}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
