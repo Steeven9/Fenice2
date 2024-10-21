@@ -10,7 +10,7 @@ const DiceRoller = dynamic(() => import("@/components/diceRoller"), {
 
 export default async function Home() {
   // TODO fetch from gcal
-  const countdownDate = ""; //"2024-10-30 12:00";
+  const countdownDate = process.env.NEXT_SESSION_DATE; //"2024-10-30 12:00";
 
   let result = await getCampaigns(undefined, { status: "Ongoing" });
   const campaigns = (result.data.reverse() as Campaign[]) ?? [];
@@ -33,12 +33,14 @@ export default async function Home() {
       <div className="mb-4">
         {campaigns.length == 0 ? "None for now :(" : null}
         {campaigns.map((campaign) => (
-          <Link
-            href={`/campaigns/${campaign._id}`}
-            key={campaign._id?.toString()}
-          >
-            {campaign.name}
-          </Link>
+          <div key={campaign._id?.toString()}>
+            <Link
+              href={`/characters/by-campaign/${campaign._id}`}
+              className="link"
+            >
+              {campaign.name}
+            </Link>
+          </div>
         ))}
       </div>
 

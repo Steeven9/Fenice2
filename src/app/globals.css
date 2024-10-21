@@ -79,7 +79,7 @@ textarea {
 }
 
 .link {
-  @apply hover:text-blue-700 underline;
+  @apply hover:text-blue-600 underline;
 }
 
 .title {

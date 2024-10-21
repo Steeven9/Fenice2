@@ -30,7 +30,7 @@ export default async function CampaignsPage() {
     <>
       <div className="title">Campaigns</div>
 
-      <div className="mb-4">
+      <div className="mb-6">
         <div className="subtitle">Stats</div>
         {Object.entries(statusCounts).map(([status, count]) => (
           <span key={status} className="mr-2">
@@ -50,7 +50,7 @@ export default async function CampaignsPage() {
           return (
             <div key={campaign._id!.toString()} className="mb-6">
               <div className="subtitle">{campaign.name}</div>
-              <CampaignInfo campaign={campaign} />
+              <CampaignInfo campaign={campaign} isCharacterPage={false} />
 
               <div className="my-2">
                 {`${currentCharacters.length} `}

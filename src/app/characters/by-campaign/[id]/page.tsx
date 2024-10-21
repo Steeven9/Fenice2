@@ -43,7 +43,7 @@ export default async function CampaignCharactersPage({
   return (
     <>
       <div className="flex justify-between items-center">
-        <div className="title">
+        <div className="title !mb-0">
           Characters{" "}
           <Select
             redirectPath="/characters/by-campaign"
@@ -61,7 +61,7 @@ export default async function CampaignCharactersPage({
         </Link>
       </div>
 
-      <CampaignInfo campaign={campaign} />
+      <CampaignInfo campaign={campaign} isCharacterPage />
 
       <div className="flex flex-wrap justify-around">
         {result.success

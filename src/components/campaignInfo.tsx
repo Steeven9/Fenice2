@@ -3,6 +3,7 @@ import Link from "next/link";
 
 interface Props {
   campaign: Campaign;
+  isCharacterPage: boolean;
 }
 
 const formatDateString = (campaign: Campaign) => {
@@ -22,28 +23,48 @@ const formatDateString = (campaign: Campaign) => {
   return dateString;
 };
 
-export default function CampaignInfo({ campaign }: Readonly<Props>) {
+export default function CampaignInfo({
+  campaign,
+  isCharacterPage,
+}: Readonly<Props>) {
   return (
     <div className="my-2">
       DM: {campaign.dm} - Type: {campaign.type}
       {campaign.ruleset != "" ? ` - Ruleset: ${campaign.ruleset}` : null}
       {formatDateString(campaign)} ({campaign.status}
       {campaign.endLevel ? ` at level ${campaign.endLevel}` : null})
-      <Link
-        href={`/alignment/by-campaign/${campaign._id}`}
-        className="primary button"
-      >
-        Alignment
-      </Link>
-      {campaign.wikiLink ? (
+      <div className="mt-2">
         <Link
-          href={campaign.wikiLink}
+          href={`/alignment/by-campaign/${campaign._id}`}
           className="primary button"
-          target="_blank"
         >
-          Wiki page
+          Alignment
         </Link>
-      ) : null}
+        {isCharacterPage ? (
+          <Link
+            href={`/npcs/by-campaign/${campaign._id}`}
+            className="primary button"
+          >
+            NPCs
+          </Link>
+        ) : (
+          <Link
+            href={`/characters/by-campaign/${campaign._id}`}
+            className="primary button"
+          >
+            Characters
+          </Link>
+        )}
+        {campaign.wikiLink ? (
+          <Link
+            href={campaign.wikiLink}
+            className="primary button"
+            target="_blank"
+          >
+            Wiki page
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 }

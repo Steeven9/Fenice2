@@ -42,7 +42,7 @@ export default async function CampaignNpcsPage({ params }: Readonly<Props>) {
   return (
     <>
       <div className="flex justify-between items-center">
-        <div className="title">
+        <div className="title !mb-0">
           NPCs{" "}
           <Select
             redirectPath="/npcs/by-campaign"
@@ -60,7 +60,7 @@ export default async function CampaignNpcsPage({ params }: Readonly<Props>) {
         </Link>
       </div>
 
-      <CampaignInfo campaign={campaign} />
+      <CampaignInfo campaign={campaign} isCharacterPage={false} />
 
       <div className="flex flex-wrap justify-around mt-2">
         {result.success
