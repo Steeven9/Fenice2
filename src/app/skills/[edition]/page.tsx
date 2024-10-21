@@ -16,16 +16,16 @@ export default function SkillsPage({ params }: Readonly<Props>) {
 
   return (
     <>
-      <p className="title">Skills {editionData.name}</p>
-
-      <Select
-        placeholder="Edition"
-        options={editions.map((edition) => {
-          return { name: edition.name, value: edition.id };
-        })}
-        redirectPath="/skills"
-        selectedItem={edition}
-      />
+      <p className="title">
+        Skills{" "}
+        <Select
+          options={editions.map((edition) => {
+            return { name: edition.name, value: edition.id };
+          })}
+          redirectPath="/skills"
+          selectedItem={edition}
+        />
+      </p>
 
       <div className="flex flex-wrap justify-center sm:justify-between mt-4">
         {editionData.skills.map((skill) => (

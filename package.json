@@ -29,6 +29,7 @@
     "@fullcalendar/timegrid": "^6.1.10",
     "autoprefixer": "^10.4.16",
     "bufferutil": "^4.0.7",
+    "framer-motion": "^11.11.9",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "minio": "^8.0.1",

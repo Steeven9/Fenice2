@@ -20,16 +20,16 @@ export default async function DocumentsPage({ params }: Readonly<Props>) {
 
   return (
     <>
-      <div className="title">Documents {editionString}</div>
-
-      <Select
-        placeholder="Edition"
-        options={editions.map((edition) => {
-          return { name: edition.name, value: edition.id };
-        })}
-        redirectPath="/documents"
-        selectedItem={edition}
-      />
+      <div className="title">
+        Documents{" "}
+        <Select
+          options={editions.map((edition) => {
+            return { name: edition.name, value: edition.id };
+          })}
+          redirectPath="/documents"
+          selectedItem={edition}
+        />
+      </div>
 
       {docs.length == 0 ? (
         "No documents found"

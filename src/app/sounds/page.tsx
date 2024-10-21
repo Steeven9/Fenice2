@@ -17,6 +17,7 @@ export default function SoundsPage() {
 
   return (
     <>
+      <div className="title">Soundboard</div>
       <div>
         {sounds.map((sound) => (
           <button
