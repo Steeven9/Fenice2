@@ -10,11 +10,7 @@ export default function MenuButton() {
   const pathname = usePathname();
 
   function toggleMenu() {
-    let divs = document.querySelectorAll("main > div");
-
-    divs[0].classList.toggle("hidden");
-    divs[1].classList.toggle("hidden");
-
+    document.querySelector("#menuPanel")?.classList.toggle("hidden");
     setIsMenuClosed(!isMenuClosed);
   }
 
@@ -26,7 +22,7 @@ export default function MenuButton() {
   });
 
   return (
-    <div className="sm:hidden">
+    <div className="lg:hidden">
       {isMenuClosed ? (
         <Menu onClick={toggleMenu} />
       ) : (

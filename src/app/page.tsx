@@ -1,4 +1,6 @@
+import { getCampaigns } from "@/actions/characters";
 import Countdown from "@/components/countdown";
+import { Campaign } from "@/types/API";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
@@ -6,14 +8,18 @@ const DiceRoller = dynamic(() => import("@/components/diceRoller"), {
   ssr: false,
 });
 
-export default function Home() {
+export default async function Home() {
+  // TODO fetch from gcal
   const countdownDate = ""; //"2024-10-30 12:00";
+
+  let result = await getCampaigns(undefined, { status: "Ongoing" });
+  const campaigns = (result.data.reverse() as Campaign[]) ?? [];
 
   return (
     <>
-      <p className="title">Welcome!</p>
-      <p className="mb-4">
-        This is the new site for our D&D group. Feel free to start exploring by
+      <div className="title">Welcome!</div>
+      <div className="mb-4">
+        This is the website for our D&D group. Feel free to start exploring by
         browsing the tabs in the menu! More features to come ＼(＾O＾)／
         <br />
         Audio recording are still hosted on the{" "}
@@ -21,7 +27,20 @@ export default function Home() {
           old website
         </Link>{" "}
         for now.
-      </p>
+      </div>
+
+      <div className="subtitle">Active campaigns</div>
+      <div className="mb-4">
+        {campaigns.length == 0 ? "None for now :(" : null}
+        {campaigns.map((campaign) => (
+          <Link
+            href={`/campaigns/${campaign._id}`}
+            key={campaign._id?.toString()}
+          >
+            {campaign.name}
+          </Link>
+        ))}
+      </div>
 
       {countdownDate ? (
         <>
@@ -30,7 +49,7 @@ export default function Home() {
         </>
       ) : null}
 
-      <p className="subtitle">Roll some dice!</p>
+      <div className="subtitle">Roll some dice!</div>
       <DiceRoller />
     </>
   );

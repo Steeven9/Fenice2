@@ -75,7 +75,7 @@ textarea {
 }
 
 .button {
-  @apply text-text-white font-bold py-[10px] px-4 rounded inline-flex align-middle space-x-3 mr-2 mb-2 border border-transparent;
+  @apply text-text-white font-bold py-[10px] px-4 rounded inline-flex align-middle space-x-3 mr-2 my-2 border border-transparent;
 }
 
 .link {

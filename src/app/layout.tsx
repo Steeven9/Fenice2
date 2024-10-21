@@ -1,11 +1,14 @@
 import MenuButton from "@/components/menuButton";
-import Sidebar from "@/components/sidebar";
+import { Sidebar, Topbar } from "@/components/navigation";
 import UserIndicator from "@/components/userIndicator";
 import icon from "@/img/icon.png";
+import contactLogo from "@/img/icon_contact.png";
+import githubLogo from "@/img/icon_github.png";
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 import "./globals.css";
 import NextAuthProvider from "./providers";
 
@@ -44,27 +47,49 @@ export default function RootLayout({ children }: Readonly<Props>) {
       >
         <ThemeProvider attribute="class">
           <NextAuthProvider>
-            <header className="bg-fenice-red p-2 text-white flex justify-between items-center">
-              <MenuButton />
-
+            <header className="p-2 dark:text-fenice-red text-black flex justify-between items-center">
               <div className="flex items-center">
-                <Image
-                  src={icon}
-                  width={32}
-                  alt="Image of a dice"
-                  className="mx-2"
-                />
-                La Compagnia della Fenice
+                <MenuButton />
+
+                <Link href={"/"} className="flex items-center">
+                  <Image
+                    src={icon}
+                    width={32}
+                    alt="Image of a dice"
+                    className="mx-2"
+                  />
+                  La Compagnia della Fenice
+                </Link>
               </div>
+
+              <Topbar />
 
               <UserIndicator />
             </header>
 
-            <main className="flex flex-1">
+            <main className="flex flex-1 mx-2 md:mx-20">
               <Sidebar />
 
               <div className="flex-grow p-3 max-w-full">{children}</div>
             </main>
+
+            <footer className="flex space-x-2 p-4 items-center justify-center">
+              <p>&copy;{new Date().getFullYear()} Soulsbros</p>
+              <Link
+                href="https://github.com/soulsbros"
+                target="_blank"
+                className="hover:rotate-45 transition-all"
+              >
+                <Image src={githubLogo} width={32} alt="GitHub logo" />
+              </Link>
+              <Link
+                href="https://soulsbros.ch/?p=contact"
+                target="_blank"
+                className="hover:rotate-45 transition-all"
+              >
+                <Image src={contactLogo} width={32} alt="Contact logo" />
+              </Link>
+            </footer>
           </NextAuthProvider>
         </ThemeProvider>
       </body>

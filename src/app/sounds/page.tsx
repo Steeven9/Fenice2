@@ -18,7 +18,7 @@ export default function SoundsPage() {
   return (
     <>
       <div className="title">Soundboard</div>
-      <div>
+      <div className="text-center">
         {sounds.map((sound) => (
           <button
             className="button primary"

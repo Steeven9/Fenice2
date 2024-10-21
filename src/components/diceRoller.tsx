@@ -5,6 +5,7 @@ import { AdvancedRoller, DisplayResults } from "@3d-dice/dice-ui";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Button from "./button";
+import Select from "./select";
 
 let rollDice = (_notation: string) => {
   // we override this after initialization
@@ -67,24 +68,24 @@ export default function DiceRoller() {
     });
   }, [diceString]);
 
+  const diceOptions = [
+    { name: "Blue", value: "#1e7098" },
+    { name: "Green", value: "#07fc03" },
+    { name: "Orange", value: "#fca503" },
+    { name: "Purple", value: "#34035e" },
+    { name: "Red", value: "#ff0000" },
+  ];
+
   return (
     <>
-      <div className="space-x-2">
-        <select
-          id="colors"
+      <div>
+        <Select
           onChange={(option) => updateColor(option.target.value)}
-          className="border rounded-lg p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-        >
-          <option value="#1e7098">Blue</option>
-          <option value="#07fc03">Green</option>
-          <option value="#fca503">Orange</option>
-          <option value="#34035e">Purple</option>
-          <option value="#ff0000">Red</option>
-        </select>
+          options={diceOptions}
+          className="align-middle"
+        />
 
-        <Button label="d20 advantage" onClick={() => rollDice("2d20kh1")} />
         <Button label="Fireball" onClick={() => rollDice("6d6")} />
-        <Button label="Stat roll" onClick={() => rollDice("4d6dl1")} />
         <Button label="Holy shit" onClick={() => rollDice("200d20")} />
       </div>
 

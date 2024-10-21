@@ -17,6 +17,7 @@ interface Props {
   redirectPath?: string;
   onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
   required?: boolean;
+  className?: string;
 }
 
 export default function Select({
@@ -28,17 +29,22 @@ export default function Select({
   redirectPath,
   onChange,
   required = false,
+  className,
 }: Readonly<Props>) {
   const router = useRouter();
   return (
-    <div className="inline-block">
-      {placeholder}
-      {required ? "*" : null}
-      <br />
+    <div className={`inline-block ${className}`}>
+      {placeholder ? (
+        <div className="mb-2">
+          {placeholder}
+          {required ? "*" : null}
+        </div>
+      ) : null}
+
       <select
         name={name}
         id={id}
-        className="p-2 m-2"
+        className="border rounded-lg p-2 m-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
         required={required}
         defaultValue={selectedItem}
         onChange={
