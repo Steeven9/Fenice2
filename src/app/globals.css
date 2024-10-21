@@ -71,11 +71,11 @@ textarea {
 }
 
 .active {
-  @apply !border-white;
+  @apply !border-black dark:!border-white;
 }
 
 .button {
-  @apply text-text-white font-bold py-[10px] px-4 rounded inline-flex align-middle space-x-3 mr-2 my-2 border border-transparent;
+  @apply text-text-white font-bold py-[10px] px-4 rounded inline-flex align-middle space-x-3 mr-2 my-2 border-2 border-transparent;
 }
 
 .link {

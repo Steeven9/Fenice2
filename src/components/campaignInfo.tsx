@@ -29,13 +29,20 @@ export default function CampaignInfo({ campaign }: Readonly<Props>) {
       {campaign.ruleset != "" ? ` - Ruleset: ${campaign.ruleset}` : null}
       {formatDateString(campaign)} ({campaign.status}
       {campaign.endLevel ? ` at level ${campaign.endLevel}` : null})
+      <Link
+        href={`/alignment/by-campaign/${campaign._id}`}
+        className="primary button"
+      >
+        Alignment
+      </Link>
       {campaign.wikiLink ? (
-        <>
-          &nbsp;-&nbsp;
-          <Link href={campaign.wikiLink} className="link" target="_blank">
-            Wiki page
-          </Link>
-        </>
+        <Link
+          href={campaign.wikiLink}
+          className="primary button"
+          target="_blank"
+        >
+          Wiki page
+        </Link>
       ) : null}
     </div>
   );

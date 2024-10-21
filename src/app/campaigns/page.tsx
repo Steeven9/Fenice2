@@ -28,6 +28,8 @@ export default async function CampaignsPage() {
 
   return (
     <>
+      <div className="title">Campaigns</div>
+
       <div className="mb-4">
         <div className="subtitle">Stats</div>
         {Object.entries(statusCounts).map(([status, count]) => (

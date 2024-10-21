@@ -43,7 +43,16 @@ export default async function CampaignCharactersPage({
   return (
     <>
       <div className="flex justify-between items-center">
-        <span className="title">Characters</span>
+        <div className="title">
+          Characters{" "}
+          <Select
+            redirectPath="/characters/by-campaign"
+            selectedItem={parsedId.toString()}
+            options={campaigns.data.reverse().map((el) => {
+              return { name: el.name, value: el._id.toString() };
+            })}
+          />
+        </div>
         <Link
           href={`/characters/new?c=${campaign._id}`}
           className="primary button mb-4"
@@ -51,15 +60,6 @@ export default async function CampaignCharactersPage({
           <Plus />
         </Link>
       </div>
-
-      <Select
-        placeholder="Campaign"
-        redirectPath="/characters/by-campaign"
-        selectedItem={parsedId.toString()}
-        options={campaigns.data.reverse().map((el) => {
-          return { name: el.name, value: el._id.toString() };
-        })}
-      />
 
       <CampaignInfo campaign={campaign} />
 

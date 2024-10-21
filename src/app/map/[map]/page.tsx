@@ -1,9 +1,9 @@
+import { LeafletLayer } from "@/components/leafletMap";
 import LinkButtons from "@/components/linkButtons";
 import { itineraryPoints, markers, teleportPoints } from "@/lib/mapLocations";
 import { LinesList, MapLocation } from "@/types/Map";
 import { LatLngTuple } from "leaflet";
 import dynamic from "next/dynamic";
-import { notFound } from "next/navigation";
 
 const LeafletMap = dynamic(() => import("@/components/leafletMap"), {
   ssr: false,
@@ -20,8 +20,11 @@ export default async function SingleMapPage({
 }: Readonly<{
   params: { map: string };
 }>) {
+  let layers: LeafletLayer[] = [];
+  let lines: LinesList[] = [];
+
   if (params.map == "brightAge") {
-    const layers = [
+    layers = [
       {
         url: "https://lafenice.soulsbros.ch/img/mappe/brightAge/{z}/tile_{x}_{y}.jpg",
         attribution: "Map data &copy; Sasha Toscano",
@@ -32,21 +35,10 @@ export default async function SingleMapPage({
         },
       },
     ];
-
-    return (
-      <>
-        <LinkButtons selected={params.map} links={links} />
-        <LeafletMap
-          position={[-9.79567758282973, 6.651439946725858]}
-          zoom={2}
-          layers={layers}
-        />
-      </>
-    );
   }
 
   if (params.map == "darkAge") {
-    const lines: LinesList[] = [
+    lines = [
       {
         points: itineraryPoints as LatLngTuple[][],
         options: { color: "blue" },
@@ -54,7 +46,7 @@ export default async function SingleMapPage({
       { points: teleportPoints as LatLngTuple[][], options: { color: "red" } },
     ];
 
-    const layers = [
+    layers = [
       {
         url: "https://oznogon.com/golarion-tile/tiles/{z}/{x}/{y}",
         attribution:
@@ -64,10 +56,21 @@ export default async function SingleMapPage({
         url: "https://oznogon.com/golarion-tile/tiles-relief/{z}/{x}/{y}",
       },
     ];
+  }
 
-    return (
-      <>
-        <LinkButtons selected={params.map} links={links} />
+  return (
+    <>
+      <div className="title">Map</div>
+      <LinkButtons selected={params.map} links={links} />
+
+      {params.map == "brightAge" ? (
+        <LeafletMap
+          position={[-9.79567758282973, 6.651439946725858]}
+          zoom={2}
+          layers={layers}
+        />
+      ) : null}
+      {params.map == "brightAge" ? (
         <LeafletMap
           position={[44, -10]}
           zoom={5}
@@ -75,14 +78,8 @@ export default async function SingleMapPage({
           lines={lines}
           layers={layers}
         />
-      </>
-    );
-  }
-
-  if (params.map == "golarion") {
-    return (
-      <>
-        <LinkButtons selected={params.map} links={links} />
+      ) : null}
+      {params.map == "golarion" ? (
         <iframe
           id="map"
           title="Map"
@@ -90,9 +87,7 @@ export default async function SingleMapPage({
           width="100%"
           height="90%"
         ></iframe>
-      </>
-    );
-  }
-
-  return notFound();
+      ) : null}
+    </>
+  );
 }

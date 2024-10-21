@@ -40,15 +40,18 @@ export default async function AlignmentDetailPage({ params }: Readonly<Props>) {
 
   return (
     <>
-      <div className="inline-block">
+      <div className="title">
+        Alignment chart{" "}
         <Select
-          placeholder="Campaign"
           redirectPath="/alignment/by-campaign"
           selectedItem={parsedId.toString()}
           options={campaigns.data.reverse().map((el) => {
             return { name: el.name, value: el._id.toString() };
           })}
         />
+      </div>
+
+      <div className="inline-block">
         {characters.length > 0 ? (
           <>
             <Canvas characters={characters} />

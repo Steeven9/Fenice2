@@ -15,7 +15,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 
-interface LeafletLayers {
+export interface LeafletLayer {
   url: string;
   attribution?: string;
   image?: boolean;
@@ -26,7 +26,7 @@ interface LeafletLayers {
 interface Props {
   position: [number, number];
   zoom: number;
-  layers: LeafletLayers[];
+  layers: LeafletLayer[];
   markers?: MapLocation[];
   lines?: LinesList[];
 }
